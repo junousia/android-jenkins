@@ -1,7 +1,10 @@
 package com.ericsson.lmf.thejenkinsviewer;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +16,7 @@ import android.widget.TextView;
 public class JenkinsActivity extends Activity {
 	private static final String TAG = JenkinsActivity.class.getSimpleName();
 	private TextView textView;
-	private ListView listView;
+	private ResponseReceiver receiver;
 	
 	@Override
 	public void onCreate(Bundle args) {
@@ -21,10 +24,15 @@ public class JenkinsActivity extends Activity {
 		super.onCreate(args);
 		setContentView(R.layout.main_layout);
 		textView = (TextView)findViewById(R.id.jenkinsInfo);
-		listView = (ListView)findViewById(R.id.jenkinsList);
-		listView.setVisibility(View.INVISIBLE);
 		Button button = (Button) findViewById(R.id.jenkinsInfoButton);
 		button.setOnClickListener(refreshListener);
+		
+		// Tying the Broadcast Receiver
+		IntentFilter filter = new IntentFilter(ResponseReceiver.ACTION_RESP);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        receiver = new ResponseReceiver();
+        registerReceiver(receiver, filter);
+        
 	}
 
 	private OnClickListener refreshListener = new OnClickListener() {
@@ -34,8 +42,17 @@ public class JenkinsActivity extends Activity {
 			Log.d(TAG, "Refresh button clicked, starting service");
 			Intent intent = new Intent(JenkinsActivity.this, JenkinsIntentService.class);
 			startService(intent);
-			textView.setVisibility(View.GONE);
-			listView.setVisibility(View.VISIBLE);
-		}
+		}	
 	};
+	
+	public class ResponseReceiver extends BroadcastReceiver {
+		   public static final String ACTION_RESP =
+		      "com.mamlambo.intent.action.MESSAGE_PROCESSED";
+		   @Override
+		    public void onReceive(Context context, Intent intent) {
+		       String text = intent.getStringExtra(JenkinsIntentService.OUT_MSG);
+		       textView.setText(text);
+		    }
+		}
+
 }

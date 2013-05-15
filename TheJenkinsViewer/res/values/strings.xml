@@ -1,6 +1,7 @@
 <resources>
 
     <string name="app_name">TheJenkinsViewer</string>
-    <string name="hello">Hello</string>
+    <string name="get_info">Get info</string>
+    <string name="jenkins_info">Jenkins info will be displayed here...</string>
     
 </resources>

@@ -1,19 +1,20 @@
 package com.ericsson.lmf.thejenkinsviewer;
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 
 public class JenkinsIntentService extends IntentService {
+	private static final String TAG = JenkinsIntentService.class.getSimpleName();
 
-	public JenkinsIntentService(String name) {
-		super(name);
+	public JenkinsIntentService() {
+		super("JenkinsIntentService");
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		// TODO Auto-generated method stub
-
+		Log.d(TAG, "onHandleIntent called");
 	}
 
 }

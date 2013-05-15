@@ -1,0 +1,8 @@
+.settings
+local.properties
+proguard.cfg
+*/.settings
+*/local.properties
+*/proguard.cfg
+*/bin
+*/gen

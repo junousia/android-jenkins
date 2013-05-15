@@ -12,6 +12,12 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/get_info" />
 
+    <ListView
+        android:id="@+id/jenkinsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
     <TextView
         android:id="@+id/jenkinsInfo"
         android:layout_width="match_parent"
